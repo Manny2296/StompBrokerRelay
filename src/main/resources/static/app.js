@@ -5,19 +5,34 @@ function connect() {
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);
-        
-        stompClient.subscribe('/topic/newpoint', function (data) {
-           
+        stompClient.subscribe('/topic/newpoint', function (data) {           
            var cor = JSON.parse(data.body);
            canvas = document.getElementById('myCanvas');
            context = canvas.getContext('2d');   
            context.beginPath();
            context.arc(cor.x,cor.y,1,0,2*Math.PI);
-           context.stroke();
+           context.stroke();           
+        });
+        
+        stompClient.subscribe('/topic/newpolygon', function (data) {           
+           var coor = JSON.parse(data.body);
+           canvas = document.getElementById('myCanvas');
+           context = canvas.getContext('2d');
+           context.fillStyle = '#f00';
+           context.beginPath();
+           context.moveTo(coor[0].x, coor[0].y);
+           context.lineTo(coor[1].x, coor[1].y);
+           context.lineTo(coor[2].x, coor[2].y);
+           context.lineTo(coor[3].x, coor[3].y);
+           context.closePath();
+           context.fill();
+           
+           
            
         });
     });
 }
+
 
 function disconnect() {
     if (stompClient != null) {
@@ -50,7 +65,7 @@ $(document).ready(
                 
             canvas.addEventListener('mousedown', function(evt) {
                 var mousePos = getMousePos(canvas, evt);
-                stompClient.send("/topic/newpoint", {}, JSON.stringify({x:mousePos.x,y:mousePos.y})); 
+                stompClient.send("/app/newpoint", {}, JSON.stringify({x:mousePos.x,y:mousePos.y})); 
                 
             }, false);
     }
