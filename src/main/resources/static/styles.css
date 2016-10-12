@@ -1,0 +1,30 @@
+#header{
+border: thin solid crimson;
+height: 180px;
+text-align: center;
+font-family: fantasy;
+font-size: 50px;
+
+
+}
+#center{
+   
+    border: thin solid crimson;
+   height: 600px;
+   text-align: center;
+    font-family: sans-serif;
+   
+}
+
+#btn_send{
+
+ background: crimson;
+ color: #f2f2f2;
+ padding: 10px;
+ font-size: 18px;
+ border-radius: 5px;
+ position: relative;
+ box-sizing: border-box;
+ transition: all 500ms ease;
+  
+}
