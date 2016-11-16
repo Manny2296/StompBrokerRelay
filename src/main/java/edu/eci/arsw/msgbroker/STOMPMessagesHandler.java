@@ -28,6 +28,7 @@ public class STOMPMessagesHandler {
 
     @MessageMapping("/newpoint")    
     public synchronized void getLine(Point pt) throws Exception {
+        System.out.println("Evento Capturado");
         msgt.convertAndSend("/topic/newpoint", pt);
         mp.adicionar(pt);
         if(mp.getSize()==4){
